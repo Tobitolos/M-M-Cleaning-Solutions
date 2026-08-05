@@ -1,76 +1,103 @@
 ﻿/* Shared site behavior */
 (function () {
- const toggle = document.querySelector(".menu-toggle");
- const links = document.querySelector(".nav-links");
+  const toggle = document.querySelector(".menu-toggle");
+  const links = document.querySelector(".nav-links");
 
- if (toggle && links) {
- toggle.addEventListener("click", () => {
- const open = links.classList.toggle("open");
- toggle.setAttribute("aria-expanded", open ? "true" : "false");
- });
+  function setMenuOpen(open) {
+    if (!toggle || !links) return;
+    links.classList.toggle("open", open);
+    toggle.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  }
 
- links.querySelectorAll("a").forEach((a) => {
- a.addEventListener("click", () => links.classList.remove("open"));
- });
- }
+  if (toggle && links) {
+    toggle.addEventListener("click", () => {
+      setMenuOpen(!links.classList.contains("open"));
+    });
 
- // Active nav link
- const page = document.body.dataset.page;
- if (page) {
- document.querySelectorAll(".nav-links a[data-nav]").forEach((a) => {
- if (a.dataset.nav === page) a.classList.add("active");
- });
- }
+    links.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => setMenuOpen(false));
+    });
+  }
 
- // Scroll reveal
- const reveals = document.querySelectorAll(".reveal");
- if (reveals.length && "IntersectionObserver" in window) {
- const io = new IntersectionObserver(
- (entries) => {
- entries.forEach((entry) => {
- if (entry.isIntersecting) {
- entry.target.classList.add("visible");
- io.unobserve(entry.target);
- }
- });
- },
- { threshold: 0.15 }
- );
- reveals.forEach((el) => io.observe(el));
- } else {
- reveals.forEach((el) => el.classList.add("visible"));
- }
+  // Active nav link
+  const page = document.body.dataset.page;
+  if (page) {
+    document.querySelectorAll(".nav-links a[data-nav]").forEach((a) => {
+      if (a.dataset.nav === page) a.classList.add("active");
+    });
+  }
 
- // Contact form opens email client with filled details
- const form = document.getElementById("contact-form");
- if (form) {
- form.addEventListener("submit", (e) => {
- e.preventDefault();
- const data = new FormData(form);
- const name = String(data.get("name") || "").trim();
- const phone = String(data.get("phone") || "").trim();
- const email = String(data.get("email") || "").trim();
- const service = String(data.get("service") || "").trim();
- const message = String(data.get("message") || "").trim();
+  // Scroll reveal
+  const reveals = document.querySelectorAll(".reveal");
+  if (reveals.length && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    reveals.forEach((el) => io.observe(el));
+  } else {
+    reveals.forEach((el) => el.classList.add("visible"));
+  }
 
- const subject = encodeURIComponent(`Free Quote Request: ${service || "Cleaning"}`);
- const body = encodeURIComponent(
- `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${message}`
- );
+  // Contact form opens email client with filled details
+  const form = document.getElementById("contact-form");
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = String(data.get("name") || "").trim();
+      const phone = String(data.get("phone") || "").trim();
+      const email = String(data.get("email") || "").trim();
+      const service = String(data.get("service") || "").trim();
+      const message = String(data.get("message") || "").trim();
 
- window.location.href = `mailto:mmcleaningsolution26@gmail.com?subject=${subject}&body=${body}`;
+      const subject = encodeURIComponent(`Free Quote Request: ${service || "Cleaning"}`);
+      const body = encodeURIComponent(
+        `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${message}`
+      );
 
- const success = document.getElementById("form-success");
- if (success) {
- success.classList.add("show");
- success.textContent =
- "Thanks! Your email app should open so you can send the request. You can also call or text 204 922 1052.";
- }
- form.reset();
- });
- }
+      window.location.href = `mailto:mmcleaningsolution26@gmail.com?subject=${subject}&body=${body}`;
 
- // Year in footer
- const year = document.getElementById("year");
- if (year) year.textContent = String(new Date().getFullYear());
+      const success = document.getElementById("form-success");
+      if (success) {
+        success.classList.add("show");
+        success.textContent =
+          "Thanks! Your email app should open so you can send the request. You can also call or text 204 922 1052.";
+      }
+      form.reset();
+    });
+  }
+
+  // Year in footer
+  const year = document.getElementById("year");
+  if (year) year.textContent = String(new Date().getFullYear());
+
+  // Scroll to top button
+  const scrollTop = document.createElement("button");
+  scrollTop.type = "button";
+  scrollTop.className = "scroll-top";
+  scrollTop.setAttribute("aria-label", "Scroll to top");
+  scrollTop.innerHTML = "↑";
+  document.body.appendChild(scrollTop);
+
+  const updateScrollTop = () => {
+    const scrolled = window.scrollY || document.documentElement.scrollTop;
+    scrollTop.classList.toggle("visible", scrolled > 400);
+  };
+
+  window.addEventListener("scroll", updateScrollTop, { passive: true });
+  updateScrollTop();
+
+  scrollTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 })();
