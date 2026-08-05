@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>Reviews | M&M Cleaning Solutions</title>
+ <meta name="description" content="See our work and leave a review for M&M Cleaning Solutions." />
+ <link rel="preconnect" href="https://fonts.googleapis.com" />
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+ <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+ <link rel="stylesheet" href="css/styles.css" />
+ <link rel="icon" href="assets/logo.png" />
+</head>
+<body data-page="review">
+ <header class="site-header">
+ <div class="nav-wrap">
+ <a class="brand" href="index.html" aria-label="M&M Cleaning Solutions home">
+ <img src="assets/logo.png" alt="M&M Cleaning Solutions logo" />
+ <span class="brand-text">M&M Cleaning<small>Solutions</small></span>
+ </a>
+ <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+ <nav class="nav-links" aria-label="Primary">
+ <a href="index.html" data-nav="home">Home</a>
+ <a href="services.html" data-nav="services">Services</a>
+ <a href="review.html" data-nav="review">Review</a>
+ <a href="about.html" data-nav="about">About</a>
+ <a class="nav-cta" href="contact.html" data-nav="contact">Contact</a>
+ </nav>
+ </div>
+ </header>
+
+ <main>
+ <section class="page-hero">
+ <div class="hero-bg" aria-hidden="true"></div>
+ <div class="hero-veil" aria-hidden="true"></div>
+ <h1>Reviews</h1>
+ <p>See our work, then share your experience. Every comment helps others choose with confidence.</p>
+ </section>
+
+ <section class="section" style="padding-top: 0.5rem;">
+ <div class="section-inner">
+ <div class="section-head reveal">
+ <span class="eyebrow">Our work</span>
+ <h2>Gallery</h2>
+ <p>Photos and videos from recent cleans.</p>
+ </div>
+
+ <div class="media-grid reveal" id="gallery">
+ <article class="media-item gallery-slot">
+ <img src="assets/banner.png" alt="Cleaning supplies ready for a job" />
+ <div class="media-meta"><span>Photo</span></div>
+ </article>
+ <article class="media-item gallery-slot">
+ <img src="assets/living-room.png" alt="Freshly cleaned living space" />
+ <div class="media-meta"><span>Photo</span></div>
+ </article>
+ <article class="media-item gallery-slot gallery-placeholder">
+ <div class="placeholder-inner">
+ <span>Video / photo</span>
+ <small></small>
+ </div>
+ </article>
+ </div>
+ </div>
+ </section>
+
+ <section class="section" style="padding-top: 0;">
+ <div class="section-inner review-layout">
+ <div class="form-panel reveal">
+ <h2>Leave a Review</h2>
+ <p>Tell others how your clean went. Multiple people can add their comments below.</p>
+ <form id="review-form">
+ <div class="form-grid">
+ <div class="field">
+ <label for="review-name">Your name</label>
+ <input id="review-name" name="name" type="text" required placeholder="e.g. Sarah M." autocomplete="name" maxlength="60" />
+ </div>
+ <div class="field">
+ <label for="review-rating">Rating</label>
+ <select id="review-rating" name="rating" required>
+ <option value="5">★★★★★ Excellent</option>
+ <option value="4">★★★★☆ Great</option>
+ <option value="3">★★★☆☆ Good</option>
+ <option value="2">★★☆☆☆ Fair</option>
+ <option value="1">★☆☆☆☆ Poor</option>
+ </select>
+ </div>
+ <div class="field full">
+ <label for="review-comment">Your comment</label>
+ <textarea id="review-comment" name="comment" required placeholder="What did you like? How was the team, timing, and results?" maxlength="800"></textarea>
+ </div>
+ </div>
+ <div style="margin-top: 1.25rem;">
+ <button class="btn btn-primary" type="submit" style="width: 100%;">Post Review</button>
+ </div>
+ <p class="form-note">Your review will appear in the list so others can read it.</p>
+ <div id="review-success" class="form-success" role="status"></div>
+ </form>
+ </div>
+
+ <div class="reviews-panel reveal">
+ <div class="media-toolbar" style="margin-top: 0;">
+ <h2>Customer Comments</h2>
+ <span id="review-count" class="review-count">0 reviews</span>
+ </div>
+ <div id="reviews-list" class="reviews-list" aria-live="polite"></div>
+ </div>
+ </div>
+ </section>
+
+ <section class="section" style="padding-top: 0;">
+ <div class="section-inner">
+ <div class="cta-band reveal">
+ <h2>Ready for your own spotless space?</h2>
+ <p>Book a clean or ask for a free quote. We're happy to help.</p>
+ <div class="hero-actions">
+ <a class="btn btn-primary" href="contact.html">Contact Us</a>
+ <a class="btn btn-outline" href="services.html">Our Services</a>
+ </div>
+ </div>
+ </div>
+ </section>
+ </main>
+
+ <footer class="site-footer">
+ <div class="footer-grid">
+ <div class="footer-brand">
+ <img src="assets/logo.png" alt="M&M Cleaning Solutions" />
+ <p>Keeping your home fresh & spotless. Professional, Reliable, Affordable.</p>
+ <p class="footer-promise" style="margin-top: 0.75rem;">We Clean, You Relax!</p>
+ </div>
+ <div class="footer-col">
+ <h4>Pages</h4>
+ <a href="index.html">Home</a>
+ <a href="services.html">Services</a>
+ <a href="review.html">Review</a>
+ <a href="about.html">About</a>
+ <a href="contact.html">Contact</a>
+ </div>
+ <div class="footer-col">
+ <h4>Reach Us</h4>
+ <a href="tel:2049221052">204 922 1052</a>
+ <a href="mailto:mmcleaningsolution26@gmail.com">mmcleaningsolution26@gmail.com</a>
+ <p>Call or text anytime for a free quote.</p>
+ </div>
+ </div>
+ <div class="footer-bottom">
+ <span>© <span id="year"></span> M&M Cleaning Solutions</span>
+ <span>Clean spaces. Happy faces.</span>
+ </div>
+ </footer>
+
+ <script src="js/main.js"></script>
+ <script src="js/reviews.js"></script>
+</body>
+</html>
