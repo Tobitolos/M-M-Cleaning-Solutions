@@ -1,5 +1,36 @@
 ﻿/* Shared site behavior */
 (function () {
+  // Theme toggle
+  const root = document.documentElement;
+  const themeBtn = document.querySelector(".theme-toggle");
+  const THEME_KEY = "mm-theme";
+
+  function getPreferredTheme() {
+    const saved = localStorage.getItem(THEME_KEY);
+    if (saved === "dark" || saved === "light") return saved;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+
+  function applyTheme(theme) {
+    if (theme === "dark") root.setAttribute("data-theme", "dark");
+    else root.removeAttribute("data-theme");
+    if (themeBtn) {
+      const next = theme === "dark" ? "light" : "dark";
+      themeBtn.setAttribute("aria-label", `Switch to ${next} theme`);
+      themeBtn.title = `Switch to ${next} theme`;
+    }
+  }
+
+  applyTheme(getPreferredTheme());
+
+  if (themeBtn) {
+    themeBtn.addEventListener("click", () => {
+      const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      localStorage.setItem(THEME_KEY, next);
+      applyTheme(next);
+    });
+  }
+
   const toggle = document.querySelector(".menu-toggle");
   const links = document.querySelector(".nav-links");
 
