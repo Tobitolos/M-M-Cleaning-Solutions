@@ -79,32 +79,54 @@
     reveals.forEach((el) => el.classList.add("visible"));
   }
 
-  // Contact form opens email client with filled details
+  // Contact form via Web3Forms
   const form = document.getElementById("contact-form");
   if (form) {
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      const success = document.getElementById("form-success");
+      const submitBtn = form.querySelector('button[type="submit"]');
       const data = new FormData(form);
-      const name = String(data.get("name") || "").trim();
-      const phone = String(data.get("phone") || "").trim();
-      const email = String(data.get("email") || "").trim();
       const service = String(data.get("service") || "").trim();
-      const message = String(data.get("message") || "").trim();
 
-      const subject = encodeURIComponent(`Free Quote Request: ${service || "Cleaning"}`);
-      const body = encodeURIComponent(
-        `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${message}`
+      data.set(
+        "subject",
+        `Free Quote Request: ${service || "Cleaning"} | M&M Cleaning Solutions`
       );
 
-      window.location.href = `mailto:mmcleaningsolution26@gmail.com?subject=${subject}&body=${body}`;
-
-      const success = document.getElementById("form-success");
       if (success) {
+        success.classList.remove("show", "error");
+        success.textContent = "Sending...";
         success.classList.add("show");
-        success.textContent =
-          "Thanks! Your email app should open so you can send the request. You can also call or text 204 922 1052.";
       }
-      form.reset();
+      if (submitBtn) submitBtn.disabled = true;
+
+      try {
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: data,
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          if (success) {
+            success.classList.remove("error");
+            success.textContent =
+              "Thanks! Your message was sent. We'll get back to you soon. You can also call or text 204 922 1052.";
+          }
+          form.reset();
+        } else {
+          throw new Error(json.message || "Something went wrong.");
+        }
+      } catch (err) {
+        if (success) {
+          success.classList.add("error");
+          success.textContent =
+            "Sorry, we couldn't send that right now. Please call or text 204 922 1052, or email mmcleaningsolution26@gmail.com.";
+        }
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
     });
   }
 
